@@ -29,6 +29,7 @@ public class Player
 
 		// Добавить карту 
 		hand.Add(eCB);
+		FanHand();
 		return (eCB);
     }
 
@@ -38,6 +39,45 @@ public class Player
 		// Если список hand пуст или не содержит карты cb, вернуть null
 		if (hand == null || !hand.Contains(cb)) return null;
 		hand.Remove(cb);
+		FanHand();
 		return (cb);
     } 
+
+	public void FanHand()
+    {
+		// Угол поворота первой карты относительно z
+		float startRot = 0;
+		startRot = handSlotDef.rot;
+		if(hand.Count > 1)
+        {
+			startRot += Bartok.S.handFanDegrees * (hand.Count - 1) / 2;
+        }
+
+		// Переместить все карты в новые позиции
+		Vector3 pos;
+		float rot;
+		Quaternion rotQ;
+		for(int i = 0; i < hand.Count; i++)
+        {
+			rot = startRot - Bartok.S.handFanDegrees * i;
+			rotQ = Quaternion.Euler(0, 0, rot);
+
+			pos = Vector3.up * CardBartok.CARD_HEIGHT / 2;
+
+			pos = rotQ * pos;
+
+			// Прбивать координаты позиции руки игрока (внизу в центре веера карт)
+			pos += handSlotDef.pos;
+			pos.z = -0.5f * i;
+
+			// Установить локальную позицию и поворот i-й карты руках
+			hand[i].transform.localPosition = pos;
+			hand[i].transform.rotation = rotQ;
+			hand[i].state = CBState.hand;
+			hand[i].faceUp = (type == PlayerType.human);
+
+			// Установить SortOrder карт, чтобы обеспечить правильное перекрытие
+			hand[i].SetSortOrder(i * 4);
+        }
+    }
 }

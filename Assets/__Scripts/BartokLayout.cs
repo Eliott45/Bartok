@@ -17,7 +17,7 @@ public class SlotDef
     public string type = "slot";
     public Vector2 stagger;
     public int player; // Порядковый номер игрока
-    public Vector2 pos; // Вычисляется на основе x,y и multiplier
+    public Vector3 pos; // Вычисляется на основе x,y и multiplier
 }
 
 public class BartokLayout : MonoBehaviour
