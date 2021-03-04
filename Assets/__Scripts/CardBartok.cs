@@ -37,6 +37,9 @@ public class CardBartok : Card
     // По завершении перемещения карты будет вызываться reportFinishTo.SendMessage()
     public GameObject reportFinishTo = null;
 
+    [System.NonSerialized]
+    public Player callbackPlayer = null;
+
     /// <summary>
     /// Запускает перемещение карты в новое местоположение с заданным поворотом
     /// </summary>
@@ -101,7 +104,14 @@ public class CardBartok : Card
                     {
                         reportFinishTo.SendMessage("CBCallback", this);
                         reportFinishTo = null;
-                    } else
+                    }
+                    else if (callbackPlayer != null)
+                    {
+                        // Если имеется ссылка на экземпляр Player
+                        callbackPlayer.CBCallback(this);
+                        callbackPlayer = null;
+                    }
+                    else
                     {
                         // Оставить все как есть.
                     }

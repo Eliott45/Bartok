@@ -102,4 +102,50 @@ public class Player
 			// hand[i].SetSortOrder(i * 4);
 		}
 	}
+
+	/// <summary>
+	/// ИИ для игроков
+	/// </summary>
+	public void TakeTurn()
+	{
+		Utils.tr(Utils.RoundToPlaces(Time.time), "Player.TakeTurn");
+
+		// Ничего не делать для игрока-человека
+		if (type == PlayerType.human) return;
+
+		Bartok.S.phase = TurnPhase.waiting;
+
+		CardBartok cb;
+
+		// Если этим игроком управляет ПК, нужно выбрать карту для хода, найти допустимые ходы
+		List<CardBartok> validCards = new List<CardBartok>();
+		foreach (CardBartok tCB in hand)
+		{
+			if (Bartok.S.ValidPlay(tCB))
+			{
+				validCards.Add(tCB);
+			}
+		}
+		// Если нет допустимых ходов
+		if (validCards.Count == 0)
+		{
+			// ...then draw a card
+			cb = AddCard(Bartok.S.Draw());
+			cb.callbackPlayer = this;
+			return;
+		}
+
+		// Выбрать одну из возможных карт которую можно сыграть
+		cb = validCards[Random.Range(0, validCards.Count)];
+		RemoveCard(cb);
+		Bartok.S.MoveToTarget(cb);
+		cb.callbackPlayer = this;
+	}
+
+	public void CBCallback(CardBartok tCB)
+    {
+		Utils.tr(Utils.RoundToPlaces(Time.time), "Player.CBCallback()", tCB.name, "Player " + playerNum);
+		// Карта завершила перемещение 
+		Bartok.S.PassTurn();
+	}
 }
