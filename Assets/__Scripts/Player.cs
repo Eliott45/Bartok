@@ -40,6 +40,10 @@ public class Player
 
 			hand = new List<CardBartok>(cards);
         }
+
+		eCB.SetSortingLayerName("10"); // Перенести перемещаемую карту в верхниий слой
+		eCB.eventualSortLayer = handSlotDef.layerName;
+
 		FanHand();
 		return (eCB);
     }
@@ -94,7 +98,8 @@ public class Player
 			hand[i].faceUp = (type == PlayerType.human);
 
 			// Установить SortOrder карт, чтобы обеспечить правильное перекрытие
-			hand[i].SetSortOrder(i * 4);
-        }
-    }
+			hand[i].eventualSortOrder = i * 4;
+			// hand[i].SetSortOrder(i * 4);
+		}
+	}
 }
