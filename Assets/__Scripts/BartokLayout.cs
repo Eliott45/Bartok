@@ -28,7 +28,7 @@ public class BartokLayout : MonoBehaviour
     public Vector2 multiplier; // Смещение в раскладке
 
     // Ссылки на SlotDef
-    public List<SlotDef> slotsDefs; // Список SlotDef для игроков
+    public List<SlotDef> slotDefs; // Список SlotDef для игроков
     public SlotDef drawPile;
     public SlotDef discardPile;
     public SlotDef target;
@@ -93,7 +93,7 @@ public class BartokLayout : MonoBehaviour
                 case "hand":
                     tSD.player = int.Parse(slotsX[i].att("player"));
                     tSD.rot = int.Parse(slotsX[i].att("rot"));
-                    slotsDefs.Add(tSD);
+                    slotDefs.Add(tSD);
                     break;
             }
         }
