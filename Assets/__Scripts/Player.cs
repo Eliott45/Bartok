@@ -29,6 +29,17 @@ public class Player
 
 		// Добавить карту 
 		hand.Add(eCB);
+
+		// Если это человек, отсортировать карты по достоинству с помощью LINQ
+		if(type == PlayerType.human)
+        {
+			CardBartok[] cards = hand.ToArray();
+
+			// Это вызов LINQ
+			cards = cards.OrderBy(cd => cd.rank).ToArray();
+
+			hand = new List<CardBartok>(cards);
+        }
 		FanHand();
 		return (eCB);
     }
