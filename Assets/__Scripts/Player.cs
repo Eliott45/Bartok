@@ -82,9 +82,15 @@ public class Player
 			pos.z = -0.5f * i;
 
 			// Установить локальную позицию и поворот i-й карты руках
+			hand[i].MoveTo(pos, rotQ); // Сообщить карте, что она должна начать интерполяцию
+			hand[i].state = CBState.toHand; // Закончив перемещение, карта запишет в поле state значении
+			
+			/*
 			hand[i].transform.localPosition = pos;
 			hand[i].transform.rotation = rotQ;
 			hand[i].state = CBState.hand;
+			*/
+
 			hand[i].faceUp = (type == PlayerType.human);
 
 			// Установить SortOrder карт, чтобы обеспечить правильное перекрытие
