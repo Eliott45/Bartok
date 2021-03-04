@@ -75,6 +75,7 @@
   <ItemGroup>
      <None Include="Assets\Resources\LayoutXML.xml" />
      <None Include="Assets\Resources\DeckXML.xml" />
+     <None Include="Assets\Resources\BartokLayoutXML.xml" />
      <None Include="Assets\Materials\UnlitAlpha.shader" />
     <Reference Include="UnityEngine">
       <HintPath>N:\programms\ForProgramming\2020.1.0f1\2020.2.1f1\Editor\Data\Managed\UnityEngine\UnityEngine.dll</HintPath>
