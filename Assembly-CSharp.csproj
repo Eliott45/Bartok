@@ -9,7 +9,7 @@
     <ProductVersion>10.0.20506</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <RootNamespace></RootNamespace>
-    <ProjectGuid>{E20FBDB5-F4D5-D075-6CC6-62386CFF24D0}</ProjectGuid>
+    <ProjectGuid>{225D8012-9531-6660-B653-7F39AB9F76CB}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <AssemblyName>Assembly-CSharp</AssemblyName>
@@ -56,23 +56,28 @@
     <Analyzer Include="C:\Program Files (x86)\Microsoft Visual Studio Tools for Unity\16.0\Analyzers\Microsoft.Unity.Analyzers.dll" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\__Scripts\Layout.cs" />
+    <Compile Include="Assets\__Scripts\Bartok.cs" />
     <Compile Include="Assets\__Scripts\Card.cs" />
-    <Compile Include="Assets\__Scripts\CardProspector.cs" />
+    <Compile Include="Assets\__Scripts\CardBartok.cs" />
     <Compile Include="Assets\__Scripts\Menu.cs" />
     <Compile Include="Assets\__Scripts\FloatingScore.cs" />
     <Compile Include="Assets\__Scripts\Utils.cs" />
     <Compile Include="Assets\__Scripts\VolumeMusic.cs" />
     <Compile Include="Assets\__Scripts\PT_XMLReader.cs" />
     <Compile Include="Assets\__Scripts\Scoreboard.cs" />
-    <Compile Include="Assets\__Scripts\Prospector.cs" />
     <Compile Include="Assets\__Scripts\Deck.cs" />
+    <Compile Include="Assets\__Scripts\BartokLayout.cs" />
     <Compile Include="Assets\__Scripts\ScoreManager.cs" />
     <Compile Include="Assets\__Scripts\HotKeys.cs" />
+    <Compile Include="Assets\__Scripts\Player.cs" />
+    <Compile Include="Assets\__Scripts\TurnLigh.cs" />
+    <Compile Include="Assets\__Scripts\GameOverUI.cs" />
+    <Compile Include="Assets\__Scripts\RoundResultUI.cs" />
   </ItemGroup>
   <ItemGroup>
      <None Include="Assets\Resources\LayoutXML.xml" />
      <None Include="Assets\Resources\DeckXML.xml" />
+     <None Include="Assets\Resources\BartokLayoutXML.xml" />
      <None Include="Assets\Materials\UnlitAlpha.shader" />
     <Reference Include="UnityEngine">
       <HintPath>N:\programms\ForProgramming\2020.1.0f1\2020.2.1f1\Editor\Data\Managed\UnityEngine\UnityEngine.dll</HintPath>
