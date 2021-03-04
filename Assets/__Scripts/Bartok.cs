@@ -3,9 +3,19 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
+public enum TurnPhase
+{
+    idle,
+    pre,
+    waiting,
+    post,
+    gameOver
+}
+
 public class Bartok : MonoBehaviour
 {
     static public Bartok S;
+    static public Player CURRENT_PLAYER;
 
     [Header("Set in Inspector")]
     public TextAsset deckXML;
@@ -21,6 +31,7 @@ public class Bartok : MonoBehaviour
     public List<CardBartok> discardPile;
     public List<Player> players;
     public CardBartok targetCard;
+    public TurnPhase phase = TurnPhase.idle;
 
     private BartokLayout layout;
     private Transform layoutAnchor;
@@ -104,7 +115,7 @@ public class Bartok : MonoBehaviour
                 // Немного отложить начало перемещения карты.
                 tCB.timeStart = Time.time + drawTimeStagger * (i * 4 + j);
 
-                players[(j + 1)% 4].AddCard(tCB);
+                players[(j + 1) % 4].AddCard(tCB);
             }
         }
 
@@ -115,6 +126,62 @@ public class Bartok : MonoBehaviour
     {
         // Перевернуть первую целевую карту лицевой стороной вверх
         CardBartok tCB = MoveToTarget(Draw());
+        // Вызвать метод CBCallback сценария Bartok, когда карта закончит перемещение
+        tCB.reportFinishTo = this.gameObject;
+    }
+
+    /// <summary>
+    /// Этот обратный вызов используется последней розданной картой в начале игры
+    /// </summary>
+    public void CBCallback(CardBartok cb)
+    {
+        Utils.tr("Bartok:CBCallback()", cb.name);
+        StartGame(); // Начать игру
+    }
+    
+    public void StartGame()
+    {
+        // Право первого хода принадлежит игроку слева от человека
+        PassTurn(1);
+    }
+
+    public void PassTurn(int num=-1)
+    {
+        // Если порядковый номер игрока не указан, выбрать следующего по кругу
+        if(num == -1)
+        {
+            int ndx = players.IndexOf(CURRENT_PLAYER);
+            num = (ndx + 1) % 4;
+        }
+        int lastPlayerNum = -1;
+        if(CURRENT_PLAYER != null)
+        {
+            lastPlayerNum = CURRENT_PLAYER.playerNum;
+        }
+        CURRENT_PLAYER = players[num];
+        phase = TurnPhase.pre;
+
+        // CURRENT_PLAYER.TakeTurn();
+
+        // Сообщить о передаче хода
+        Utils.tr("Bartok:PassTurn()", "Old: " + lastPlayerNum, "New: " + CURRENT_PLAYER.playerNum);
+    }
+
+    /// <summary>
+    /// Проверяет возможность сыграть выбранной картой
+    /// </summary>
+    public bool ValidPlay(CardBartok cb)
+    {
+        // Картой можно сыграть, если она имеет такое же достоинство, как целевая карта
+        if (cb.rank == targetCard.rank) return (true);
+
+        // Картой можно сыграть, если ее масть совпадает с мастью целевой карты
+        if (cb.suit == targetCard.suit)
+        {
+            return (true);
+        }
+
+        return (false);
     }
 
     /// <summary>
@@ -160,6 +227,8 @@ public class Bartok : MonoBehaviour
         return (cd); // и вернуть
     }
 
+    /*
+
     /// <summary>
     /// Временно используется для проверки добавления карты в руки игрока
     /// </summary>
@@ -182,4 +251,6 @@ public class Bartok : MonoBehaviour
             players[3].AddCard(Draw());
         }
     }
+
+    */
 }
