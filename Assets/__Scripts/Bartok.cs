@@ -17,6 +17,9 @@ public class Bartok : MonoBehaviour
     public List<CardBartok> drawPile;
     public List<CardBartok> discardPile;
 
+    private BartokLayout layout;
+    private Transform layoutAnchor;
+
     private void Awake()
     {
         S = this;
@@ -27,5 +30,19 @@ public class Bartok : MonoBehaviour
         deck = GetComponent<Deck>(); // Получить компонент Deck
         deck.InitDeck(deckXML.text); // Передать ему DeckXML
         Deck.Shuffle(ref deck.cards); // Перетасовать колоду
+
+        layout = GetComponent<BartokLayout>(); //Получить ссылку на компонент Layout 
+        layout.ReadLayout(layoutXML.text); // Передать ему LayoutXML
+        drawPile = UpgradeCardsList(deck.cards);
+    }
+
+    List<CardBartok> UpgradeCardsList(List<Card> lCD)
+    {
+        List<CardBartok> lCB = new List<CardBartok>();
+        foreach(Card tCD in lCD)
+        {
+            lCB.Add(tCD as CardBartok);
+        }
+        return (lCB);
     }
 }
