@@ -222,6 +222,35 @@ public class Bartok : MonoBehaviour
     /// </summary>
     public CardBartok Draw()
     {
+        
+
+        if(drawPile.Count == 0) // Если список drawPile опустел
+        {
+            print("Worked");
+            // Перетасовать сброшенне карты и переложить их в стопку свободных карт
+            int ndx;
+            while (discardPile.Count > 0)
+            {
+                // Вынуть случайную карту из стопки сброшенных карт
+                ndx = Random.Range(0, discardPile.Count);
+                drawPile.Add(discardPile[ndx]);
+                discardPile.RemoveAt(ndx);
+            }
+            ArrangeDrawPile();
+            // Показать перемещение карт в стопку свободных карт
+            float t = Time.time;
+            foreach (CardBartok tCB in drawPile)
+            {
+                tCB.transform.localPosition = layout.discardPile.pos;
+                tCB.callbackPlayer = null;
+                tCB.MoveTo(layout.drawPile.pos);
+                tCB.timeStart = t;
+                t += 0.02f;
+                tCB.state = CBState.toDrawpile;
+                tCB.eventualSortLayer = "0";
+            }
+        }
+
         CardBartok cd = drawPile[0]; // Извлечь 0-ю карту
         drawPile.RemoveAt(0); // Удалить ее из списка drawPile
         return (cd); // и вернуть
