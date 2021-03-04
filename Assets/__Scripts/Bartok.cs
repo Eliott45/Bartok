@@ -157,6 +157,9 @@ public class Bartok : MonoBehaviour
         if(CURRENT_PLAYER != null)
         {
             lastPlayerNum = CURRENT_PLAYER.playerNum;
+            if(CheckGameOver()) {
+                return;
+            }
         }
         CURRENT_PLAYER = players[num];
         phase = TurnPhase.pre;
@@ -165,6 +168,40 @@ public class Bartok : MonoBehaviour
 
         // Сообщить о передаче хода
         Utils.tr("Bartok:PassTurn()", "Old: " + lastPlayerNum, "New: " + CURRENT_PLAYER.playerNum);
+    }
+
+    public bool CheckGameOver()
+    {
+        // Проверить, нужно ли перетасовать стопку сброшенных карт и перенести ее в стопку свободных карт
+        if (drawPile.Count == 0)
+        {
+            List<Card> cards = new List<Card>();
+            foreach (CardBartok cb in discardPile)
+            {
+                cards.Add(cb);
+            }
+            discardPile.Clear();
+            Deck.Shuffle(ref cards);
+            drawPile = UpgradeCardsList(cards);
+            ArrangeDrawPile();
+        }
+
+        // Проверить победу текущего игрока
+        if (CURRENT_PLAYER.hand.Count == 0)
+        {
+            // Победивший игрок:
+            phase = TurnPhase.gameOver;
+            Invoke("RestartGame", 1);
+            return (true);
+        }
+
+        return (false);
+    }
+
+    public void RestartGame()
+    {
+        CURRENT_PLAYER = null;
+        SceneManager.LoadScene("__Bartok_Scene_0");
     }
 
     /// <summary>

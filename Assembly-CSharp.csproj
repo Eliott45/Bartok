@@ -71,6 +71,8 @@
     <Compile Include="Assets\__Scripts\HotKeys.cs" />
     <Compile Include="Assets\__Scripts\Player.cs" />
     <Compile Include="Assets\__Scripts\TurnLigh.cs" />
+    <Compile Include="Assets\__Scripts\GameOverUI.cs" />
+    <Compile Include="Assets\__Scripts\RoundResultUI.cs" />
   </ItemGroup>
   <ItemGroup>
      <None Include="Assets\Resources\LayoutXML.xml" />
