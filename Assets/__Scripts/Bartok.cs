@@ -227,6 +227,42 @@ public class Bartok : MonoBehaviour
         return (cd); // и вернуть
     }
 
+    public void CardClicked(CardBartok tCB)
+    {
+        if (CURRENT_PLAYER.type != PlayerType.human) return; 
+        if (phase == TurnPhase.waiting) return;
+        
+
+        switch (tCB.state)
+        {
+            case CBState.drawpile:
+                // Взять верхнюю карту, не обязательно ту, по которой выполнен щелчок
+                CardBartok cb = CURRENT_PLAYER.AddCard(Draw());
+                cb.callbackPlayer = CURRENT_PLAYER;
+                Utils.tr("Bartok:CardClicked()", "Draw", cb.name);
+                phase = TurnPhase.waiting;
+                break;
+            case CBState.hand:
+                // Проверить допустимость выбранной карты
+                if (ValidPlay(tCB))
+                {
+                    CURRENT_PLAYER.RemoveCard(tCB);
+                    MoveToTarget(tCB);
+                    tCB.callbackPlayer = CURRENT_PLAYER;
+                    Utils.tr("Bartok.CardClicked()", "Play", tCB.name, targetCard.name + " is target");
+                    phase = TurnPhase.waiting;
+                }
+                else
+                {
+                    // Игнорировать выбор недопустимой карты
+                    Utils.tr("Bartok.CardClicked()", "Attempted to Play", tCB.name, targetCard.name + " is target");
+                }
+                break;
+
+        }
+    }
+
+
     /*
 
     /// <summary>

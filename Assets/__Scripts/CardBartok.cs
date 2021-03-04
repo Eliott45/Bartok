@@ -88,7 +88,7 @@ public class CardBartok : Card
                 {
                     uC = 1;
                     // Перевести из состояния to в соответствующее
-                    if (state == CBState.toHand) state = CBState.toHand;
+                    if (state == CBState.toHand) state = CBState.hand;
                     if (state == CBState.toTarget) state = CBState.target;
                     if (state == CBState.toDrawpile) state = CBState.drawpile;
                     if (state == CBState.to) state = CBState.idle;
@@ -139,5 +139,14 @@ public class CardBartok : Card
                 }
                 break;
         }
+    }
+
+    /// <summary>
+    /// Реакция карты на щелчокмышью.
+    /// </summary>
+    override public void OnMouseUpAsButton()
+    {
+        Bartok.S.CardClicked(this);
+        base.OnMouseUpAsButton();
     }
 }
