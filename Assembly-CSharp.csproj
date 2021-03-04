@@ -69,6 +69,8 @@
     <Compile Include="Assets\__Scripts\Deck.cs" />
     <Compile Include="Assets\__Scripts\ScoreManager.cs" />
     <Compile Include="Assets\__Scripts\HotKeys.cs" />
+    <Compile Include="Assets\__Scripts\Bartok.cs" />
+    <Compile Include="Assets\__Scripts\CardBartok.cs" />
   </ItemGroup>
   <ItemGroup>
      <None Include="Assets\Resources\LayoutXML.xml" />
