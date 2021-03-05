@@ -5,15 +5,9 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 0
-    path: 
-    guid: 00000000000000000000000000000000
-  - enabled: 0
-    path: 
-    guid: 00000000000000000000000000000000
-  - enabled: 0
-    path: 
-    guid: 00000000000000000000000000000000
+  - enabled: 1
+    path: Assets/Scenes/_Bartok_Menu.unity
+    guid: ec2f7fcbe0e7ae2488be8bc5648ce207
   - enabled: 1
     path: Assets/Scenes/__Bartok_Scene_0.unity
     guid: 01c5243d17a95924496e8e2c57e8794e
