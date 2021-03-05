@@ -19,7 +19,7 @@ public class Menu : MonoBehaviour
     /// </summary>
     public void StartGame()
     {
-        SceneManager.LoadScene("__Prospector_Scene_0");
+        SceneManager.LoadScene("__Bartok_Scene_0");
         DontDestroyOnLoad(music);
         
     }
